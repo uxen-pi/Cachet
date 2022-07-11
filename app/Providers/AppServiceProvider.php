@@ -40,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+        if($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
+
         $dispatcher->mapUsing(function ($command) {
             return Dispatcher::simpleMapping($command, 'CachetHQ\Cachet\Bus', 'CachetHQ\Cachet\Bus\Handlers');
         });
